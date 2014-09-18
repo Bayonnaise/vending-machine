@@ -1,4 +1,4 @@
-class CashPot
+class CashContainer
 
 	AMOUNTS = { "1p" => 0.01,
 							"2p" => 0.02,
@@ -50,6 +50,10 @@ class CashPot
 			total += AMOUNTS[type] * quantity
 		end
 		total
+	end
+
+	def quantity(type)
+		coins[type]
 	end
 
 	private
