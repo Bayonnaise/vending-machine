@@ -42,10 +42,6 @@ class CashContainer
 		coins.map { |type, quantity| AMOUNTS[type] * quantity }.inject(&:+)
 	end
 
-	def quantity(type)
-		coins[type]
-	end
-
 	private
 
 	def enough_left?(total, quantity)

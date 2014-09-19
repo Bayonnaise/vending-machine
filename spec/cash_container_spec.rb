@@ -35,10 +35,6 @@ describe 'cash container' do
 			cash.release_coins("1p" => 2, "5p" => 2, "£2" => 3)
 			expect(cash.coin_count).to eq 10
 		end
-
-		it 'can give the number of a type of coin' do
-			expect(cash.quantity("5p")).to eq 4
-		end
 	end
 
 	context 'validations' do
