@@ -35,21 +35,11 @@ class CashContainer
 	end
 
 	def release_coins(batch)
-		batch.each do |type, quantity|
-			if enough?(coins[type], quantity)
-				coins[type] -= quantity
-			else
-				puts "Not enough #{type} coins!"
-			end
-		end
+		batch.each { |type, quantity|	release(type, quantity) }
 	end
 
 	def total_value
-		total = 0
-		coins.each do |type, quantity|
-			total += AMOUNTS[type] * quantity
-		end
-		total
+		coins.map { |type, quantity| AMOUNTS[type] * quantity }.inject(&:+)
 	end
 
 	def quantity(type)
@@ -58,7 +48,15 @@ class CashContainer
 
 	private
 
-	def enough?(total, quantity)
+	def enough_left?(total, quantity)
 		(total -= quantity) >= 0
+	end
+
+	def release(type, quantity)
+		enough_left?(coins[type], quantity) ? reduce_total(type, quantity) : (puts "Not enough #{type} coins!")
+	end
+
+	def reduce_total(type, quantity)
+		coins[type] -= quantity
 	end
 end
