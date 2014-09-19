@@ -31,7 +31,7 @@ class CashContainer
 	end
 
 	def accept_coins(batch)
-		batch.each { |type, quantity| coins[type] += quantity }	
+		coins.merge!(batch) { |coin, existing, extra| existing + extra }
 	end
 
 	def release_coins(batch)
