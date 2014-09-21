@@ -27,7 +27,7 @@ describe 'cash container' do
 		end
 
 		it 'knows the total value of its coins' do
-			expect(cash.total_value).to eq 12.35
+			expect(cash.total_value).to eq 1235
 		end
 
 		it 'can release coins' do
@@ -42,6 +42,26 @@ describe 'cash container' do
 			expect(cash).to receive(:puts).with("Not enough 1p coins!")
 			cash.release_coins("1p" => 1)
 			expect(cash.coin_count).to eq 0
+		end
+	end
+
+	context 'giving change' do
+		before(:each) do
+			cash.accept_coins("1p" => 10, "2p" => 10, "5p" => 10, "10p" => 5, "20p" => 5, "50p" => 5, "£1" => 5, "£2" => 10)
+		end
+
+		it 'gives the fewest number of coins to meet an amount' do
+			expect(cash.calculate_change(1887)).to eq ({ "2p" => 1, "5p" => 1, "10p" => 1, "20p" => 1, "50p" => 1, "£2" => 9 })
+		end
+
+		it 'only gives coins it has when calulating change' do
+			expect(cash.calculate_change(2263)).to eq ({ "£2" => 10, "£1" => 2, "50p" => 1, "10p" => 1, "2p" => 1, "1p" => 1 })
+		end
+
+		it 'removes the change from the coins array if successful' do
+			expect(cash.coin_count).to eq 60
+			cash.process_change(2263)
+			expect(cash.coin_count).to eq 44
 		end
 	end
 end

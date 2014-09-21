@@ -37,7 +37,7 @@ describe 'vending machine' do
 	context 'loading the contents' do
 		it 'can be loaded with change' do
 			machine.load_coins("£2" => 5, "£1" => 5, "20p" => 3)
-			expect(machine.money.total_value).to eq 15.60
+			expect(machine.money.total_value).to eq 1560
 		end
 
 		it 'can be loaded with products' do
@@ -50,9 +50,9 @@ describe 'vending machine' do
 		let(:machine) { VendingMachine.new(coins: starting_coins, products: products) }
 		
 		it 'can give change' do
-			expect(machine.money.total_value).to eq 40.95
+			expect(machine.money.total_value).to eq 4095
 			machine.release_coins("£2" => 2, "50p" => 2, "5p" => 5)
-			expect(machine.money.total_value).to eq 35.70
+			expect(machine.money.total_value).to eq 3570
 		end
 
 		it 'can release a product' do
