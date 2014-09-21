@@ -58,7 +58,8 @@ class CashContainer
 				amount = remainder(amount, coin_value)
 			end
 		end
-		output
+		
+		enough_change?(amount, output)
 	end
 
 	private
@@ -85,6 +86,10 @@ class CashContainer
 
 	def remainder(amount, coin_value)
 		amount % coin_value
+	end
+
+	def enough_change?(amount, output)
+		amount == 0 ? (return output) : (raise "Not enough change")
 	end
 
 	def remove_change(change)

@@ -63,5 +63,9 @@ describe 'cash container' do
 			cash.process_change(2263)
 			expect(cash.coin_count).to eq 44
 		end
+
+		it 'gives an error if not enough change to give' do
+			expect { cash.process_change(3563) }.to raise_error "Not enough change"
+		end
 	end
 end
