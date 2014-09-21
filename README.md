@@ -1,4 +1,4 @@
-#Vending machine
+#Vending machine [![Code Climate](https://codeclimate.com/github/Bayonnaise/vending-machine/badges/gpa.svg)](https://codeclimate.com/github/Bayonnaise/vending-machine) [![Test Coverage](https://codeclimate.com/github/Bayonnaise/vending-machine/badges/coverage.svg)](https://codeclimate.com/github/Bayonnaise/vending-machine)
 **Ruby/RSpec technical challenge**
 
 ##Objectives
@@ -23,4 +23,3 @@ The machine needs to keep track of the products and money that it contains.
 
 - Implement interface class, to allow the user to buy products, insert coins and receive change, and to see the current contents of the vending machine.
 - Refactor
-- Add CodeClimate
