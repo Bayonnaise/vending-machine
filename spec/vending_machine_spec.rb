@@ -66,4 +66,25 @@ describe 'vending machine' do
 			machine.release_product(wine_gums)
 		end
 	end
+
+	context 'displaying menu and taking orders' do
+		let(:machine) { VendingMachine.new(coins: starting_coins, products: products) }
+
+		it 'displays the menu with prices and quantities' do
+			expect(machine).to receive(:puts).with("1. Haribo, £1.99 - 3 in stock")
+			expect(machine).to receive(:puts).with("2. Kit-Kat, £0.50 - 1 in stock")
+			machine.display_menu
+		end
+
+		it 'asks for a choice of product' do
+			allow(machine).to receive(:puts)
+			expect(machine).to receive(:puts).with("Enter a number to choose your product")
+			expect(machine).to receive(:gets).and_return("1")
+			machine.request_order
+		end
+
+		it 'asks for payment' do
+			
+		end
+	end
 end
