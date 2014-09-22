@@ -84,7 +84,7 @@ class VendingMachine
 	end
 
 	def get_price(order)
-		products.to_a[order.to_i-1][0].price*100
+		get_product(order).price*100
 	end
 
 	def give_change(change)
@@ -99,8 +99,13 @@ class VendingMachine
 
 	def check_choice(order)
 		exit if order == "q"
-		return try_again if !is_in_stock?(products.to_a[order.to_i-1][0])
-		release_product(products.to_a[order.to_i-1][0])
+		product = get_product(order)
+		return try_again if !is_in_stock?(product)
+		release_product(product)
 		order
+	end
+
+	def get_product(order)
+		products.to_a[order.to_i-1][0]
 	end
 end
