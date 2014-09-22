@@ -41,7 +41,10 @@ class VendingMachine
 	end
 
 	def run
-		loop { process_payment(get_price(request_order)) }
+		loop do 
+			puts "-------------------\nWelcome to the vending machine (change remaining: #{price_to_string(money.total_value/100.00)})"
+			process_payment(get_price(request_order))
+		end
 	end
 
 	private
@@ -59,7 +62,7 @@ class VendingMachine
 	end
 
 	def get_order_number
-		puts "Enter a product number, or type q to exit"
+		puts "-------------------\nEnter a product number, or type q to exit"
 		gets.chomp
 	end
 
@@ -97,7 +100,7 @@ class VendingMachine
 	end
 
 	def show_change(change)
-		puts "Here is your change:"
+		puts "-------------------\nHere is your change:"
 		change.each { |type, quantity| puts "#{type} x #{quantity}" }
 	end
 end
