@@ -78,7 +78,7 @@ describe 'vending machine' do
 
 		it 'asks for a choice of product' do
 			allow(machine).to receive(:puts)
-			expect(machine).to receive(:puts).with("Enter a number to choose your product")
+			expect(machine).to receive(:puts).with("Enter a product number, or type q to exit")
 			expect(machine).to receive(:gets).and_return("1")
 			machine.request_order
 		end

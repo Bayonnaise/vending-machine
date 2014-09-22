@@ -28,16 +28,11 @@ class VendingMachine
 
 	def request_order
 		display_menu
-		get_order_number
+		check_choice(get_order_number)
 	end
 
 	def display_menu
 		products.each_with_index { |product, index| display_product(product, index) }
-	end
-
-	def get_order_number
-		puts "Enter a number to choose your product"
-		gets.chomp
 	end
 
 	def process_payment(amount)
@@ -46,11 +41,27 @@ class VendingMachine
 	end
 
 	def run
-		process_payment(get_price(request_order))
-		puts "Thank you"
+		loop { process_payment(get_price(request_order)) }
 	end
 
 	private
+
+	def check_choice(order)
+		exit if order == "q"
+		return try_again if !is_in_stock?(products.to_a[order.to_i-1][0])
+		release_product(products.to_a[order.to_i-1][0])
+		order
+	end
+
+	def try_again
+		puts "Out of stock, choose again"
+		request_order
+	end
+
+	def get_order_number
+		puts "Enter a product number, or type q to exit"
+		gets.chomp
+	end
 
 	def can_be_released?(product)
 		is_valid?(product) && is_in_stock?(product)
@@ -87,7 +98,6 @@ class VendingMachine
 
 	def show_change(change)
 		puts "Here is your change:"
-		change.each { |type, quantity| 
-			puts "#{type} x #{quantity}" }
+		change.each { |type, quantity| puts "#{type} x #{quantity}" }
 	end
 end
