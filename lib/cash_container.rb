@@ -1,23 +1,11 @@
 class CashContainer
 
-	AMOUNTS = { "1p" => 1,
-							"2p" => 2,
-							"5p" => 5,
-							"10p" => 10,
-							"20p" => 20,
-							"50p" => 50,
-							"£1" => 100,
-							"£2" => 200 }
+	AMOUNTS = { "1p" => 1, "2p" => 2, "5p" => 5, "10p" => 10,
+							"20p" => 20, "50p" => 50, "£1" => 100, "£2" => 200 }
 
 	def initialize
-		@coins = {  "1p" => 0,
-								"2p" => 0,
-								"5p" => 0,
-								"10p" => 0,
-								"20p" => 0,
-								"50p" => 0,
-								"£1" => 0,
-								"£2" => 0 }
+		@coins = {  "1p" => 0, "2p" => 0, "5p" => 0, "10p" => 0,
+								"20p" => 0, "50p" => 0, "£1" => 0, "£2" => 0 }
 		@change = {}
 		@inserted_total = 0
 	end
@@ -46,12 +34,8 @@ class CashContainer
 
 	def request_payment(target)
 		@inserted_total = 0
-		puts "Please enter #{price_to_string(target)}"
-
-		while @inserted_total < target do
-			puts "You've entered #{price_to_string(@inserted_total)}" 
-			@inserted_total += request_coin(target)
-		end
+		puts "Please enter #{price_to_string(target)}\n---------------------"
+		another_coin(target) while @inserted_total < target
 	end
 
 	def request_coin(target)
@@ -95,6 +79,11 @@ class CashContainer
 		remainder(amount, value)
 	end
 
+	def another_coin(target)
+		puts "You've entered #{price_to_string(@inserted_total)}" 
+		@inserted_total += request_coin(target)
+	end
+
 	def not_enough_of_coin(amount, coin_type, coin_value)
 		number_of_coins_in(amount, coin_value) > coins[coin_type]
 	end
@@ -121,7 +110,7 @@ class CashContainer
 	end
 
 	def enough_change?(amount)
-		amount == 0 ? (return change) : (raise "Not enough change")
+		amount < 1 ? (return change) : (raise "Not enough change")
 	end
 
 	def remove_change(change)
