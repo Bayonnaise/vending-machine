@@ -84,6 +84,8 @@ describe 'vending machine' do
 		end
 
 		it 'asks for payment' do
+			allow(machine).to receive(:puts)
+			allow(machine.money).to receive(:puts)
 			expect(machine.money).to receive(:request_coin).exactly(2).times.and_return(50)
 			machine.process_payment(85)
 			expect(machine.money.inserted_total).to eq 100

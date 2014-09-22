@@ -11,15 +11,26 @@ The machine should take an initial load of products and change with denomination
 
 The machine needs to keep track of the products and money that it contains.
 
-##Development - in progress
+##Development
 
-####Done...
+The program has three classes: **Product**, **CashContainer** and **VendingMachine**.
 
-- Product class contains name and price
-- CashContainer class accepts and releases coins, calculates and gives change, gives error if it doesn't have enough change left
-- VendingMachine class accepts and releases coins, and accepts and releases products if in stock
+The **Product** class tracks each product's name and price. The **CashContainer** class tracks all the money inside the machine, accepts and releases batches of coins, and calculates the change to deliver back to the user. The **VendingMachine** class handles the loading and unloading of coins and products, and the processing of orders using a simple terminal input system.
 
-####To do...
+The system can currently check whether the selected product is in stock, it can check whether it has enough change to give back to the user, and it can give back the change in the coins it has. The ability to reload the machine is in place, but is not presented to the customer through the menu I've implemented. With more time I'd add options to the menu to allow for maintenance, perhaps protected by a password.
 
-- Implement interface class, to allow the user to buy products, insert coins and receive change, and to see the current contents of the vending machine.
-- Refactor
+####How to run
+
+```shell
+git clone https://github.com/Bayonnaise/vending-machine.git
+cd vending-machine
+ruby lib/run.rb
+```
+
+####How to test
+
+```shell
+git clone https://github.com/Bayonnaise/vending-machine.git
+cd vending-machine
+rspec
+```
