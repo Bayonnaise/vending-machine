@@ -73,17 +73,19 @@ class CashContainer
 	end
 
 	def process_coin(amount, type, value)
-		if not_enough_of_coin(amount, type, value)
-			add_change(type => coins[type])
-			return amount -= all_of_type(type)
-		else
-			add_change(type => number_of_coins_in(amount, value))
-			return remainder(amount, value)
-		end
+		return all_of_coin(amount, type) if not_enough_of_coin(amount, type, value)
+		
+		add_change(type => number_of_coins_in(amount, value))
+		remainder(amount, value)
 	end
 
 	def not_enough_of_coin(amount, coin_type, coin_value)
 		number_of_coins_in(amount, coin_value) > coins[coin_type]
+	end
+
+	def all_of_coin(amount, type)
+		add_change(type => coins[type])
+		amount -= value_of_coins(type)
 	end
 
 	def add_change(calculation)
@@ -94,7 +96,7 @@ class CashContainer
 		(amount / coin_value).floor
 	end
 
-	def all_of_type(coin_type)
+	def value_of_coins(coin_type)
 		coins[coin_type] * AMOUNTS[coin_type]
 	end
 
