@@ -40,13 +40,13 @@ class VendingMachine
 		gets.chomp
 	end
 
-	def request_payment(amount)
+	def process_payment(amount)
 		money.request_payment(amount)
+		give_change(money.calculate_change(money.inserted_total-amount))
 	end
 
 	def run
-		order = request_order
-		request_payment(get_price(order))
+		process_payment(get_price(request_order))
 		puts "Thank you"
 	end
 
@@ -78,5 +78,16 @@ class VendingMachine
 
 	def get_price(order)
 		products.to_a[order.to_i-1][0].price*100
+	end
+
+	def give_change(change)
+		release_coins(change)
+		show_change(change)
+	end
+
+	def show_change(change)
+		puts "Here is your change:"
+		change.each { |type, quantity| 
+			puts "#{type} x #{quantity}" }
 	end
 end

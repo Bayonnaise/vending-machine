@@ -46,6 +46,8 @@ class CashContainer
 
 	def request_payment(target)
 		@inserted_total = 0
+		puts "Please enter #{price_to_string(target)}"
+
 		while @inserted_total < target do
 			puts "You've entered #{price_to_string(@inserted_total)}" 
 			@inserted_total += request_coin(target)

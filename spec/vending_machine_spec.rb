@@ -85,7 +85,7 @@ describe 'vending machine' do
 
 		it 'asks for payment' do
 			expect(machine.money).to receive(:request_coin).exactly(2).times.and_return(50)
-			machine.request_payment(85)
+			machine.process_payment(85)
 			expect(machine.money.inserted_total).to eq 100
 		end
 	end
