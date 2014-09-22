@@ -19,9 +19,10 @@ class CashContainer
 								"£1" => 0,
 								"£2" => 0 }
 		@change = {}
+		@inserted_total = 0
 	end
 
-	attr_reader :coins, :change
+	attr_reader :coins, :change, :inserted_total
 
 	def empty?
 		coin_count == 0
@@ -41,6 +42,19 @@ class CashContainer
 
 	def total_value
 		coins.map { |type, quantity| AMOUNTS[type] * quantity }.inject(&:+)
+	end
+
+	def request_payment(target)
+		@inserted_total = 0
+		while @inserted_total < target do
+			puts "You've entered #{price_to_string(@inserted_total)}" 
+			@inserted_total += request_coin(target)
+		end
+	end
+
+	def request_coin(target)
+		puts "Please enter a coin (eg. '£1' or '20p')"
+		AMOUNTS[gets.chomp]
 	end
 
 	def process_change(amount)
@@ -110,5 +124,9 @@ class CashContainer
 
 	def remove_change(change)
 		coins.merge!(change) { |coin, existing, to_remove| existing - to_remove }
+	end
+
+	def price_to_string(price)
+		"£#{sprintf('%.2f', price/100.00)}"
 	end
 end

@@ -68,4 +68,13 @@ describe 'cash container' do
 			expect { cash.process_change(3563) }.to raise_error "Not enough change"
 		end
 	end
+
+	context 'taking payment' do
+		it 'can request coins until a target is met' do
+			allow(cash).to receive(:puts)
+			expect(cash).to receive(:gets).exactly(4).times.and_return "£1"
+			cash.request_payment(345)
+			expect(cash.inserted_total).to eq 400
+		end
+	end
 end

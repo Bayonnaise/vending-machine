@@ -32,13 +32,22 @@ class VendingMachine
 	end
 
 	def display_menu
-		products.each_with_index { |product, index|
-			puts "#{index+1}. #{product[0].name}, #{price_to_string(product[0].price)} - #{product[1]} in stock" }
+		products.each_with_index { |product, index| display_product(product, index) }
 	end
 
 	def get_order_number
 		puts "Enter a number to choose your product"
 		gets.chomp
+	end
+
+	def request_payment(amount)
+		money.request_payment(amount)
+	end
+
+	def run
+		order = request_order
+		request_payment(get_price(order))
+		puts "Thank you"
 	end
 
 	private
@@ -59,8 +68,15 @@ class VendingMachine
 		products[product] -= 1
 	end
 
-	def price_to_string(price)
+	def display_product(product, index)
+		puts "#{index+1}. #{product[0].name}, #{price_to_string(product[0].price)} - #{product[1]} in stock"
+	end
 
+	def price_to_string(price)
 		"£#{sprintf('%.2f', price)}"
+	end
+
+	def get_price(order)
+		products.to_a[order.to_i-1][0].price*100
 	end
 end
