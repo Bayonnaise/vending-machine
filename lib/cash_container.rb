@@ -35,12 +35,13 @@ class CashContainer
 	def request_payment(target)
 		@inserted_total = 0
 		puts "Please enter #{price_to_string(target)}\n---------------------"
-		another_coin(target) while @inserted_total < target
+		another_coin while @inserted_total < target
 	end
 
-	def request_coin(target)
+	def request_coin
 		puts "Please enter a coin (eg. '£1' or '20p')"
-		AMOUNTS[gets.chomp]
+		coin = gets.chomp
+		AMOUNTS.has_key?(coin) ? AMOUNTS[coin] : request_coin
 	end
 
 	def process_change(amount)
@@ -79,9 +80,9 @@ class CashContainer
 		remainder(amount, value)
 	end
 
-	def another_coin(target)
+	def another_coin
 		puts "You've entered #{price_to_string(@inserted_total)}" 
-		@inserted_total += request_coin(target)
+		@inserted_total += request_coin
 	end
 
 	def not_enough_of_coin(amount, coin_type, coin_value)
