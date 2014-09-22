@@ -49,13 +49,6 @@ class VendingMachine
 
 	private
 
-	def check_choice(order)
-		exit if order == "q"
-		return try_again if !is_in_stock?(products.to_a[order.to_i-1][0])
-		release_product(products.to_a[order.to_i-1][0])
-		order
-	end
-
 	def try_again
 		puts "Out of stock, choose again"
 		request_order
@@ -102,5 +95,12 @@ class VendingMachine
 	def show_change(change)
 		puts "-------------------\nHere is your change:"
 		change.each { |type, quantity| puts "#{type} x #{quantity}" }
+	end
+
+	def check_choice(order)
+		exit if order == "q"
+		return try_again if !is_in_stock?(products.to_a[order.to_i-1][0])
+		release_product(products.to_a[order.to_i-1][0])
+		order
 	end
 end
