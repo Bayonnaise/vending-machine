@@ -18,9 +18,10 @@ class CashContainer
 								"50p" => 0,
 								"£1" => 0,
 								"£2" => 0 }
+		@change = {}
 	end
 
-	attr_reader :coins
+	attr_reader :coins, :change
 
 	def empty?
 		coin_count == 0
@@ -46,20 +47,15 @@ class CashContainer
 		remove_change(calculate_change(amount))
 	end
 
-	def calculate_change(amount, output={})
-		AMOUNTS.reverse_each do |coin_type, coin_value|
-			next if amount < coin_value
+	def calculate_change(amount_left)
+		@change = {}
 
-			if not_enough_of_coin(amount, coin_type, coin_value)
-				output.merge!(coin_type => coins[coin_type])
-				amount -= coins[coin_type] * coin_value
-			else
-				output.merge!(coin_type => number_of_coins_in(amount, coin_value))
-				amount = remainder(amount, coin_value)
-			end
+		AMOUNTS.reverse_each do |coin_type, coin_value|
+			next if amount_left < coin_value
+			amount_left = process_coin(amount_left, coin_type, coin_value)
 		end
 		
-		enough_change?(amount, output)
+		enough_change?(amount_left)
 	end
 
 	private
@@ -76,20 +72,38 @@ class CashContainer
 		coins[type] -= quantity
 	end
 
+	def process_coin(amount, type, value)
+		if not_enough_of_coin(amount, type, value)
+			add_change(type => coins[type])
+			return amount -= all_of_type(type)
+		else
+			add_change(type => number_of_coins_in(amount, value))
+			return remainder(amount, value)
+		end
+	end
+
 	def not_enough_of_coin(amount, coin_type, coin_value)
 		number_of_coins_in(amount, coin_value) > coins[coin_type]
+	end
+
+	def add_change(calculation)
+		change.merge!(calculation)
 	end
 
 	def number_of_coins_in(amount, coin_value)
 		(amount / coin_value).floor
 	end
 
+	def all_of_type(coin_type)
+		coins[coin_type] * AMOUNTS[coin_type]
+	end
+
 	def remainder(amount, coin_value)
 		amount % coin_value
 	end
 
-	def enough_change?(amount, output)
-		amount == 0 ? (return output) : (raise "Not enough change")
+	def enough_change?(amount)
+		amount == 0 ? (return change) : (raise "Not enough change")
 	end
 
 	def remove_change(change)
