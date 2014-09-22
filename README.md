@@ -21,6 +21,29 @@ The system can currently check whether the selected product is in stock, it can 
 
 ---
 
+####Example output
+
+```shell
+Welcome to the vending machine (change remaining: £40.95)
+1. Haribo, £1.50 - 3 in stock
+2. Kit-Kat, £0.65 - 1 in stock
+3. Mars, £0.75 - 5 in stock
+4. Cuddly Toy, £6.99 - 1 in stock
+5. Gun, £16.49 - 0 in stock
+-------------------
+Enter a product number, or type q to exit
+```
+
+```shell
+Here is your change:
+£1 x 1
+20p x 1
+10p x 1
+5p x 1
+```
+
+---
+
 ####How to run
 
 ```shell
