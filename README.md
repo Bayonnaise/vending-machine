@@ -19,6 +19,8 @@ The **Product** class tracks each product's name and price. The **CashContainer*
 
 The system can currently check whether the selected product is in stock, it can check whether it has enough change to give back to the user, and it can give back the change in the coins it has. The ability to reload the machine is in place, but is not presented to the customer through the menu I've implemented. With more time I'd add options to the menu to allow for maintenance, perhaps protected by a password.
 
+---
+
 ####How to run
 
 ```shell
